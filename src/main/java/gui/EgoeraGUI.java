@@ -42,7 +42,7 @@ public class EgoeraGUI extends JFrame {
 
 		// Lista
 		taula = new JTable();
-		List<Booking> TravelsList = appFacadeInterface.getBookedRides(username);
+		List<Booking> travelsList = appFacadeInterface.getBookedRides(username);
 		scrollPane = new JScrollPane(taula);
 		getContentPane().add(scrollPane, BorderLayout.NORTH);
 
@@ -60,7 +60,7 @@ public class EgoeraGUI extends JFrame {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-		for (Booking booking : TravelsList) {
+		for (Booking booking : travelsList) {
 			String status;
 			switch (booking.getStatus()) {
 			case "Completed":
@@ -106,7 +106,7 @@ public class EgoeraGUI extends JFrame {
 				int pos = taula.getSelectedRow();
 				if (pos != -1) {
 					Date gaur = new Date();
-					Booking booking = TravelsList.get(pos);
+					Booking booking = travelsList.get(pos);
 
 					if (!booking.getStatus().equals("Accepted")) {
 						lblErrorea.setForeground(Color.RED);
@@ -166,7 +166,7 @@ public class EgoeraGUI extends JFrame {
 
 					Date gaur = new Date();
 
-					Booking booking = TravelsList.get(pos);
+					Booking booking = travelsList.get(pos);
 
 					if (!booking.getStatus().equals("Accepted")) {
 						lblErrorea.setForeground(Color.RED);
