@@ -135,7 +135,7 @@ public class KotxeaGehituGUI extends JFrame {
 		try {
 			// CAMBIO HECHO en .isEmpty()
 			if ((textFieldmatrikula.getText().isEmpty()) || (textFieldmodeloa.getText().isEmpty())
-					|| (textFieldeserlekuak.getText().length() == 0))
+					|| (textFieldeserlekuak.getText().isEmpty()))
 				return ResourceBundle.getBundle("Etiquetas").getString("KotxeaGUI.ErrorQuery");
 			else {
 				int inputSeats = Integer.parseInt(textFieldeserlekuak.getText());
