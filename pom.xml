@@ -62,7 +62,6 @@
 		<version>2.3.2</version>
 	</dependency>
 
-
 	<!-- API JAX-WS -->
 	<dependency>
 		<groupId>jakarta.xml.ws</groupId>
