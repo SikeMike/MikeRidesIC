@@ -226,11 +226,9 @@ public class CreateRideGUI extends JFrame {
 						UtilDate.trim(jCalendar.getDate()), inputSeats, price, driver.getUsername());
 				jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideCreated"));
 
-			} catch (RideMustBeLaterThanTodayException e1) {
+			} catch (RideMustBeLaterThanTodayException | RideAlreadyExistException e1) {
 				jLabelMsg.setText(e1.getMessage());
-			} catch (RideAlreadyExistException e1) {
-				jLabelMsg.setText(e1.getMessage());
-			}
+			} 
 
 	}
 
@@ -241,8 +239,8 @@ public class CreateRideGUI extends JFrame {
 	private String field_Errors() {
 
 		try {
-			if ((fieldOrigin.getText().length() == 0) || (fieldDestination.getText().length() == 0)
-					|| (jTextFieldPrice.getText().length() == 0))
+			if ((fieldOrigin.getText().isEmpty()) || (fieldDestination.getText().isEmpty())
+					|| (jTextFieldPrice.getText().isEmpty()))
 				return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorQuery");
 			else {
 

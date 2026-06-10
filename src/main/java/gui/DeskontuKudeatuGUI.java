@@ -109,13 +109,13 @@ public class DeskontuKudeatuGUI extends JFrame {
 		jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("EgoeraGUI.Close"));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jButtonClose_actionPerformed(e);
+				jButtonClose_actionPerformed();
 			}
 		});
 		this.getContentPane().add(jButtonClose, BorderLayout.SOUTH);
 	}
 
-	private void jButtonClose_actionPerformed(ActionEvent e) {
+	private void jButtonClose_actionPerformed() {
 		this.setVisible(false);
 	}
 

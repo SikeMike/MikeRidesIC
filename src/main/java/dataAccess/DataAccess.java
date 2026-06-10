@@ -1,6 +1,7 @@
 package dataAccess;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,7 +32,9 @@ public class DataAccess {
 	ConfigXML c = ConfigXML.getInstance();
 	
 	private String adminPass="admin";
-
+	
+	Logger logger = Logger.getLogger(getClass().getName());
+	
 	public DataAccess() {
 		if (c.isDatabaseInitialized()) {
 			String fileName = c.getDbFilename();
@@ -40,7 +44,7 @@ public class DataAccess {
 				File fileToDeleteTemp = new File(fileName + "$");
 				fileToDeleteTemp.delete();
 
-				System.out.println("File deleted");
+				logger.info("File deleted");
 			} else {
 				System.out.println("Operation failed");
 			}
@@ -70,6 +74,10 @@ public class DataAccess {
 	public void initializeDB() {
 		db.getTransaction().begin();
 		try {
+			
+			String madrid = "Madrid";
+			String donostia = "Donostia";
+			
 			Driver driver1 = new Driver("Urtzi", "123");
 			driver1.setMoney(15);
 			driver1.setBalorazioa(14);
@@ -104,11 +112,11 @@ public class DataAccess {
 			cal.set(2024, Calendar.APRIL, 20);
 			Date date4 = UtilDate.trim(cal.getTime());
 
-			driver1.addRide("Donostia", "Madrid", date2, 5, 20); //ride1
-			driver1.addRide("Irun", "Donostia", date2, 5, 2); //ride2
-			driver1.addRide("Madrid", "Donostia", date3, 5, 5); //ride3
-			driver1.addRide("Barcelona", "Madrid", date4, 0, 10); //ride4
-			driver2.addRide("Donostia", "Hondarribi", date1, 5, 3); //ride5
+			driver1.addRide(donostia, madrid, date2, 5, 20); //ride1
+			driver1.addRide("Irun", donostia, date2, 5, 2); //ride2
+			driver1.addRide(madrid, donostia, date3, 5, 5); //ride3
+			driver1.addRide("Barcelona", madrid, date4, 0, 10); //ride4
+			driver2.addRide(donostia, "Hondarribi", date1, 5, 3); //ride5
 
 			Ride ride1 = driver1.getCreatedRides().get(0);
 			Ride ride2 = driver1.getCreatedRides().get(1);
