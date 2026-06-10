@@ -31,7 +31,7 @@
     <sonar.organization>sikemike</sonar.organization>
 	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	<sonar.projectKey>sikemike_mikeridesic</sonar.projectKey>
-	<sonar.login>dfcde033517d6f95afcfb39fa005ff2ade87d742</sonar.login>
+	<sonar.login>f8ab4bd69094591e3079b8860e257470f8375a88</sonar.login>
 </properties>
 
 <!-- https://mvnrepository.com/artifact/junit/junit -->
