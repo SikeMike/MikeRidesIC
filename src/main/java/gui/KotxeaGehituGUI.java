@@ -134,7 +134,7 @@ public class KotxeaGehituGUI extends JFrame {
 	private String field_Errors() {
 		try {
 			// CAMBIO HECHO en .isEmpty()
-			if ((textFieldmatrikula.getText().isEmpty()) || (textFieldmodeloa.getText().length() == 0)
+			if ((textFieldmatrikula.getText().isEmpty()) || (textFieldmodeloa.getText().isEmpty())
 					|| (textFieldeserlekuak.getText().length() == 0))
 				return ResourceBundle.getBundle("Etiquetas").getString("KotxeaGUI.ErrorQuery");
 			else {
