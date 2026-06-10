@@ -12,6 +12,7 @@ import dataAccess.DataAccess;
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
 
+// Comentario de prueba
 public class ApplicationLauncher {
 
 	public static void main(String[] args) {
