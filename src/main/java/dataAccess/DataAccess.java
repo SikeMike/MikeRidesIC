@@ -531,16 +531,19 @@ public class DataAccess {
 
 			Traveler traveler = getTraveler(username);
 			if (traveler == null) {
+				System.out.println("IF-TRAVELER");
 				return false;
 			}
 
 			if (ride.getnPlaces() < seats) {
+				System.out.println("IF-PLACES");
 				return false;
 			}
 
 			double ridePriceDesk = (ride.getPrice() - desk) * seats;
 			double availableBalance = traveler.getMoney();
 			if (availableBalance < ridePriceDesk) {
+				System.out.println("IF-MONEY");
 				return false;
 			}
 

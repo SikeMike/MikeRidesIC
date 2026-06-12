@@ -1,7 +1,9 @@
 package testOperations;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -9,8 +11,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import configuration.ConfigXML;
+import domain.Booking;
 import domain.Driver;
 import domain.Ride;
+import domain.Traveler;
+import jdk.internal.org.jline.terminal.TerminalBuilder.SystemOutput;
 
 
 public class TestDataAccess {
@@ -86,54 +91,99 @@ public class TestDataAccess {
 
 	}
 		
-		public Driver addDriverWithRide(String name, String from, String to,  Date date, int nPlaces, float price) {
-			System.out.println(">> TestDataAccess: addDriverWithRide");
-				Driver driver=null;
-				db.getTransaction().begin();
-				try {
-					 driver = db.find(Driver.class, name);
-					if (driver==null) {
-						System.out.println("Entra en null");
-						driver=new Driver(name,null);
-				    	db.persist(driver);
-					}
-				    driver.addRide(from, to, date, nPlaces, price);
-					db.getTransaction().commit();
-					System.out.println("Driver created "+driver);
-					
-					return driver;
-					
+	public Driver addDriverWithRide(String name, String from, String to,  Date date, int nPlaces, float price) {
+		System.out.println(">> TestDataAccess: addDriverWithRide");
+			Driver driver=null;
+			db.getTransaction().begin();
+			try {
+				 driver = db.find(Driver.class, name);
+				if (driver==null) {
+					System.out.println("Entra en null");
+					driver=new Driver(name,null);
+			    	db.persist(driver);
 				}
-				catch (Exception e){
-					e.printStackTrace();
-				}
-				return null;
-	    }
-		
-		
-		public boolean existRide(String name, String from, String to, Date date) {
-			System.out.println(">> TestDataAccess: existRide");
-			Driver d = db.find(Driver.class, name);
-			if (d!=null) {
-				return d.doesRideExists(from, to, date);
-			} else 
-			return false;
-		}
-		public Ride removeRide(String name, String from, String to, Date date ) {
-			System.out.println(">> TestDataAccess: removeRide");
-			Driver d = db.find(Driver.class, name);
-			if (d!=null) {
-				db.getTransaction().begin();
-				Ride r= d.removeRide(from, to, date);
+			    driver.addRide(from, to, date, nPlaces, price);
 				db.getTransaction().commit();
-				System.out.println("created rides" +d.getCreatedRides());
-				return r;
-
-			} else 
+				System.out.println("Driver created "+driver);
+				
+				return driver;
+				
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
 			return null;
+    }
+	public boolean existRide(String name, String from, String to, Date date) {
+		System.out.println(">> TestDataAccess: existRide");
+		Driver d = db.find(Driver.class, name);
+		if (d!=null) {
+			return d.doesRideExists(from, to, date);
+		} else 
+		return false;
+	}
+	public Ride removeRide(String name, String from, String to, Date date ) {
+		System.out.println(">> TestDataAccess: removeRide");
+		Driver d = db.find(Driver.class, name);
+		if (d!=null) {
+			db.getTransaction().begin();
+			Ride r= d.removeRide(from, to, date);
+			db.getTransaction().commit();
+			System.out.println("created rides" +d.getCreatedRides());
+			return r;
 
+		} else 
+		return null;
+
+	}
+
+	// NUEVO MÉTODO PARA PODER VERIFICAR bookRide()
+	public Traveler createTravelerWithMoney(String name, String pass, double money) {
+		System.out.println(">> TestDataAccess: createTravelerWithMoney");
+		Traveler traveler = null;
+		db.getTransaction().begin();
+		try {
+			traveler = new Traveler(name, pass);
+			traveler.setMoney(money);
+			db.persist(traveler);
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			db.getTransaction().rollback();
 		}
-
+		return traveler;
+	}
+	// NUEVO MÉTODO PARA PODER VERIFICAR bookRide()
+	public boolean removeTraveler(String name) {
+		System.out.println(">> TestDataAccess: removeTraveler");
+		Traveler t = db.find(Traveler.class, name);
+		if (t!=null) {
+			db.getTransaction().begin();
+			db.remove(t);
+			db.getTransaction().commit();
+			return true;
+		} else
+			return false;
+	}
+	// NUEVO MÉTODO PARA PODER VERIFICAR bookRide()
+	public boolean removeBooking(String username) {
+		System.out.println("TestDataAccess: removeBooking");
+		Traveler t = db.find(Traveler.class, username);
+		if (t!=null) {
+			db.getTransaction().begin();
+			List<Booking> bookings = t.getBookedRides();
+			List<Booking> toRemove = new ArrayList();
+			for (Booking b : bookings) {
+				toRemove.add(b);
+			}
+			for (Booking b : toRemove) {
+				db.remove(b);
+			}
+			db.getTransaction().commit();
+			return true;
+		} else
+			return false;
+	}
 
 		
 }
